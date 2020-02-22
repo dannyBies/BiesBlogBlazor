@@ -1,0 +1,24 @@
+﻿@page "/blog/{BlogId}"
+@using System.Net.Http
+@inject HttpClient Http
+
+@if(_blog != null)
+{
+    <article class="blog-detail">
+        <h2>@_blog.Title</h2>
+
+        @((MarkupString)_blog.Content)
+    </article>
+}
+
+@code {
+    [Parameter]
+    public string BlogId { get; set; }
+
+    private BiesBlogBlazor.Shared.Entities.Blog _blog;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _blog = await Http.GetJsonAsync<BiesBlogBlazor.Shared.Entities.Blog>("api/blogs/" + BlogId);
+    }
+}
