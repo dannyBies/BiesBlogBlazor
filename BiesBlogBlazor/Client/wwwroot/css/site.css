@@ -67,16 +67,12 @@ article {
     padding-left: 1em;
 }
 
-article.blog-detail {
-    padding-top: 2.4em;
-}
-
-.blog-link h1, .blog-link h2 {
+.blog-link h1 {
     margin: unset;
     margin-bottom: 20px;
 }
 
-.blog-link h1:after, .blog-link h2:after {
+.blog-link h1:after {
     content: unset;
     display: unset;
     position: unset;
@@ -91,21 +87,14 @@ article.blog-detail {
     line-height: 1em;
 }
 
-.header h2 {
-    font-size: 3em;
-    font-weight: normal;
-    line-height: .75em;
-}
-
-h1 a, h2 a {
+h1 a {
     text-decoration: none;
     color: #488B9E;
 }
 
-h1 a:hover, h2 a:hover {
+h1 a:hover {
     color: black;
 }
-
 
 .about-page a {
     color: #488B9E;

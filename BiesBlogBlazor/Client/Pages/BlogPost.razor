@@ -5,7 +5,7 @@
 @if(_blog != null)
 {
     <article class="blog-detail">
-        <h2>@_blog.Title</h2>
+        <h1 class="blog-header-title">@_blog.Title</h1>
 
         @((MarkupString)_blog.Content)
     </article>
