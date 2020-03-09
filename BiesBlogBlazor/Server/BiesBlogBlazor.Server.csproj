@@ -21,6 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Watch Remove="Controllers\BlogPostsController.cs" />
+    <Watch Remove="Mongo\BlogPostFeedHostedService.cs" />
     <Watch Remove="Mongo\MongoOptions.cs" />
   </ItemGroup>
 

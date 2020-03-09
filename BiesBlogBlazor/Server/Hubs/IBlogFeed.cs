@@ -5,6 +5,6 @@ namespace BiesBlogBlazor.Server.Hubs
 {
     public interface IBlogFeed
     {
-        Task BlogCreated(Blog blog);
+        Task BlogPostCreated(BlogPost blogPost);
     }
 }

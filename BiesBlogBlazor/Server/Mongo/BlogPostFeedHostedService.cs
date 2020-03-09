@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace BiesBlogBlazor.Server.Mongo
 {
-    public class BlogFeedHostedService : BackgroundService
+    public class BlogPostFeedHostedService : BackgroundService
     {
         private readonly IHubContext<BlogHub, IBlogFeed> _blogHub;
         private readonly MongoOptions _mongoOptions;
 
-        public BlogFeedHostedService(IHubContext<BlogHub, IBlogFeed> blogHub, MongoOptions mongoOptions)
+        public BlogPostFeedHostedService(MongoOptions mongoOptions, IHubContext<BlogHub, IBlogFeed> blogHub)
         {
             _blogHub = blogHub;
             _mongoOptions = mongoOptions;
@@ -25,16 +25,16 @@ namespace BiesBlogBlazor.Server.Mongo
         {
             var client = new MongoClient(_mongoOptions.ConnectionString);
             var database = client.GetDatabase(_mongoOptions.Database);
-            var collection = database.GetCollection<Blog>(nameof(Blog));
+            var collection = database.GetCollection<BlogPost>(nameof(BlogPost));
             
-            var insertOperationsOnlyFilter = new EmptyPipelineDefinition<ChangeStreamDocument<Blog>>().Match(x => x.OperationType == ChangeStreamOperationType.Insert);
-            var blogFeed = new MongoDbChangeStreamFeed<Blog>(collection, TimeSpan.FromSeconds(5));
+            var insertOperationsOnlyFilter = new EmptyPipelineDefinition<ChangeStreamDocument<BlogPost>>().Match(x => x.OperationType == ChangeStreamOperationType.Insert);
+            var blogPostFeed = new MongoDbChangeStreamFeed<BlogPost>(collection, TimeSpan.FromSeconds(5));
 
             try
             {
-                await foreach (Blog blog in blogFeed.FetchFeed(insertOperationsOnlyFilter, cancellationToken))
+                await foreach (var blog in blogPostFeed.FetchFeed(insertOperationsOnlyFilter, cancellationToken))
                 {
-                    await _blogHub.Clients.All.BlogCreated(blog);
+                    await _blogHub.Clients.All.BlogPostCreated(blog);
                 }
             }
             catch (OperationCanceledException)

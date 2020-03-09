@@ -13,7 +13,7 @@ namespace BiesBlogBlazor.Server
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; set; }
+        private readonly IConfiguration Configuration;
 
         public Startup(IConfiguration configuration)
         {
@@ -23,7 +23,7 @@ namespace BiesBlogBlazor.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
-            services.AddHostedService<BlogFeedHostedService>();
+            services.AddHostedService<BlogPostFeedHostedService>();
 
             services.AddMvc();
             services.AddResponseCompression(responseCompressionOptions =>

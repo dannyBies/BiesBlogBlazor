@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BiesBlogBlazor.Shared.Entities
 {
-    public class Blog : Entity
+    public class BlogPost : Entity
     {
         [Required]
         public string Title { get; set; }

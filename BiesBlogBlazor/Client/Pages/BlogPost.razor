@@ -15,10 +15,10 @@
     [Parameter]
     public string BlogId { get; set; }
 
-    private BiesBlogBlazor.Shared.Entities.Blog _blog;
+    private BiesBlogBlazor.Shared.Entities.BlogPost _blog;
 
     protected override async Task OnInitializedAsync()
     {
-        _blog = await Http.GetJsonAsync<BiesBlogBlazor.Shared.Entities.Blog>("api/blogs/" + BlogId);
+        _blog = await Http.GetJsonAsync<BiesBlogBlazor.Shared.Entities.BlogPost>("api/blogs/" + BlogId);
     }
 }

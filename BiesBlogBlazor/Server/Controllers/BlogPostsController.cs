@@ -12,24 +12,24 @@ namespace BiesBlogBlazor.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogsController : ControllerBase
+    public class BlogPostsController : ControllerBase
     {
-        public IMongoCollection<Blog> BlogCollection { get; set; }
+        public IMongoCollection<BlogPost> BlogCollection { get; set; }
 
-        public BlogsController(MongoOptions mongoOptions)
+        public BlogPostsController(MongoOptions mongoOptions)
         {
             var client = new MongoClient(mongoOptions.ConnectionString);
-            BlogCollection = client.GetDatabase(mongoOptions.Database).GetCollection<Blog>(nameof(Blog));
+            BlogCollection = client.GetDatabase(mongoOptions.Database).GetCollection<BlogPost>(nameof(BlogPost));
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Blog>> Get()
+        public async Task<IEnumerable<BlogPost>> Get()
         {
             return (await BlogCollection.FindAsync((blog) => true)).ToList();
         }
 
         [HttpGet("{id}", Name = "Get")]
-        public async Task<Blog> Get(string id)
+        public async Task<BlogPost> Get(string id)
         {
             return (await BlogCollection.FindAsync((blog) => blog.Id == id)).SingleOrDefault();
         }

@@ -1,32 +1,27 @@
 ﻿@page "/"
-@using System.Net.Http
 @using Microsoft.AspNetCore.SignalR.Client
-@inject HttpClient Http
 @inject NavigationManager NavigationManager
 
-@foreach (var blog in _blogs)
+@foreach (var blogPost in _blogPosts)
 {
-    <article class="blog-link">
-        <h1><a href="blog/@blog.Id">@blog.Title</a></h1>
-        @((MarkupString)blog.Description)
+    <article>
+        <h1><a href="blog/@blogPost.Id">@blogPost.Title</a></h1>
+        @blogPost.Description
     </article>
 }
-
 @code {
     private HubConnection _hubConnection;
-    private List<BiesBlogBlazor.Shared.Entities.Blog> _blogs = new List<BiesBlogBlazor.Shared.Entities.Blog>();
+    private List<BiesBlogBlazor.Shared.Entities.BlogPost> _blogPosts = new List<BiesBlogBlazor.Shared.Entities.BlogPost>();
 
     protected override async Task OnInitializedAsync()
     {
-        _blogs = await Http.GetJsonAsync<List<BiesBlogBlazor.Shared.Entities.Blog>>("api/blogs");
-
         _hubConnection = new HubConnectionBuilder()
             .WithUrl(NavigationManager.ToAbsoluteUri("/blogHub"))
             .Build();
 
-        _hubConnection.On("BlogCreated", (BiesBlogBlazor.Shared.Entities.Blog blog) =>
+        _hubConnection.On("BlogPostCreated", (BiesBlogBlazor.Shared.Entities.BlogPost blogPost) =>
         {
-            _blogs.Add(blog);
+            _blogPosts.Add(blogPost);
             StateHasChanged();
         });
 
